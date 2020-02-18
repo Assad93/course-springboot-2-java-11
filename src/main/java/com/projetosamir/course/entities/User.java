@@ -1,13 +1,20 @@
 package com.projetosamir.course.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Table(name = "tb_user")
 public class User implements Serializable { // Serializable: serve para transformar meu obj em cadeia de bytes
 	/**
 	 * 
@@ -20,6 +27,10 @@ public class User implements Serializable { // Serializable: serve para transfor
 	private String email;
 	private String phone;
 	private String password;
+	
+	@JsonIgnore // irá ignorar os pedidos do cliente
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList<>(); // smp instanciar as collections
 	
 	public User() {
 		
@@ -78,6 +89,10 @@ public class User implements Serializable { // Serializable: serve para transfor
 		this.password = password;
 	}
 
+	
+	public List<Order> getOrders() {
+		return orders;
+	} //list n tem set
 
 
 	@Override
